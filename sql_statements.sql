@@ -12,11 +12,11 @@ create table account(
 --hieronder maken we een tabel persoon aan.
 create table persoon(
 	id int not null,
-    account_id int,
+	account_id int,
 	voornaam varchar(255) not null,
 	tussenvoegsel varchar (255),
 	achternaam varchar (255) not null,
 	username varchar (255) not null,
-    primary KEY(id),
+	primary KEY(id),
 	foreign key (account_id) references account(id)
 );
