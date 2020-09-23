@@ -20,3 +20,9 @@ create table persoon(
 	primary KEY(id),
 	foreign key (account_id) references account(id)
 );
+--hieronder maken we een admin als gebruiker door zijn gegevens toe te voegen aan de kollomen.
+insert into account(id,email,password)
+values(1,'admin1@google.com','e00cf25ad42683b3df678c61f42c6bda');
+insert into persoon(id,account_id,voornaam,tussenvoegsel,achternaam,username)
+values(1,1,'Julie','','Mak','admin1');
+
