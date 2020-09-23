@@ -10,6 +10,7 @@ class database{
 	private $db;
 
 	public function __construct($host,$username,$password,$database,$charset,$db){
+
 		$this->host = $host;
 		$this->username = $username;
 		$this->password = $password;
@@ -22,9 +23,10 @@ class database{
 			$dsn = "mysql:host=$this->host;dbname=$this->database;charset=$this->charset";
 			$this->db = new PDO($dns, $this->username, $this->password);
 			echo 'Succesfully connected';
-		}catch(PDOexception $e){
+		}
+		catch(PDOexception $e){
 			echo $e->getMessage();
-			exit('An error occurred')
+			exit('An error occurred');
 		}
 	}
 
