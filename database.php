@@ -15,8 +15,7 @@ class database{
 		$this->username = $username;
 		$this->password = $password;
 		$this->database = $database;
-		$this->charset = $charset;
-	
+		$this->charset = $charset;	
 
 		try{
 			// connectie aanmaken met database
@@ -30,40 +29,31 @@ class database{
 		}
 	}
 
-	public function addAccount($email, $password){
+	public function addAccount($voornaam, $tussenvoegsel, $achternaam, $email, $username, $password){
 		
 		try{
 			//beginnen aan transactie			
 			$this->db->beginTransaction();
+
 			echo "begin transatie";
-			$pdo1 = "INSERT INTO account('id', 'email', 'password') VALUES (?,?,?)";
-			echo "sql statement: ".$pdo1;
-			$stmt = $this->db->prepare($pdo1);
-			print_r($pdo1);
-			$stmtExcecute = $stmt->execute(['id'=>NULL,'email'=>$email, 'password'=>$password]);
+
+			$query = "INSERT INTO account (email, username, password) 
+				VALUES ('$email','$username', '$password')";
+			$query2 = "INSERT INTO persoon (voornaam, tussenvoegsel, achternaam) 
+				VALUES ('$voornaam','$tussenvoegsel','$achternaam')";
+
+			echo "sql statement: ".$query."<br>".$query2;
+
+			$stmt = $this->db->prepare($query, $query2);
+			print_r($query, $query2);
+
+			$stmtExcecute = $stmt->execute(['voornaam'=>$voornaam,'tussenvoegsel'=>$tussenvoegsel, 'achternaam'=>$achternaam,  'email'=>email, 'username'=>username, 'password'=>password]);
 			$this->db->commit();
-		}catch (Exception $a){
+		}
+		catch (Exception $a){
 			$this->db->rollback();
 			throw $a;
 		}
-	}	
-	/*public function executeQueryExample(){
-	
-		$sql = 'SELECT * FROM account WHERE email=$email AND status=$status';
-		$statement = $this->db->prepare($query);
-		$statement->execute();
-		$statement->fetch();
-
-		$sql = 'SELECT * FROM account WHERE email=? AND status=?';
-		$statement = $this->db->prepare($query);
-		$statement->execute([$email, $status]);
-		$statement->fetch();
-
-		$sql = 'SELECT * FROM account WHERE email=:email AND status=:status';
-		$statement = $this->db->prepare($query);
-		$statement->execute(['email' => $email, 'status' => $status]);
-		$statement->fetch();
-	}*/
-
+	}		
 }
 ?>

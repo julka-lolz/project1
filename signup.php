@@ -2,39 +2,39 @@
 
 include 'database.php';
 
-$db = new database('localhost', 'root', '', 'project1', 'utf8');
+
+
 $fieldnames = array(
-	$_POST["voornaam"], 
-	$_POST["achternaam"], 
-	$_POST["email"], 
-	$_POST["username"], 
-	$_POST["password"]	
+	'voornaam', 'achternaam', 'email', 'username', 'password', 'repassword'
+	
 ); 
-$error = false;
+
+$error = False;
 
 foreach($fieldnames as $fieldname){
-	if (isset($_POST[$fieldname])){
+	if (!isset($_POST[$fieldname]) || empty($_POST[$fieldname])){ 
 		$error = True;
-	} else {
-		if (!isset($_POST['submit'])) {
-			$voornaam = $_POST["voornaam"];
-			$tussenvoegsel = $_POST["tussenvoegsel"];
-			$achternaam = $_POST["achternaam"];
-			$email = $_POST["email"];
-			$username = $_POST["username"];
-			$password = $_POST["password"];
-			$query=mysqli_query(
-				"INSERT INTO 'account' AND 'persoon' (`voornaam`,`tussenvoegsel`,`achternaam`,`email`,`username`, 'password') 
-				VALUES ('$voornaam','$tussenvoegsel','$achternaam','$email','$username', '$password')"
-			);
-			echo ('<br>Treść została dodana<br>');
-		}
-						
 	}
+	echo "$error <br>";
 }
 
+if(!$error){
+	$db = new database('localhost', 'root', '', 'project1', 'utf8');
 
+	$voornaam = $_POST["voornaam"];
+	$tussenvoegsel = $_POST["tussenvoegsel"];
+	$achternaam = $_POST["achternaam"];
+	$email = $_POST["email"];
+	$username = $_POST["username"];
+	$password = $_POST["password"];
+	$repassword = $_POST["repassword"];
+
+	// pass + repass check
+
+	$db->addAccount($voornaam, $tussenvoegsel, $achternaam, $email, $username, $password);
+}
 ?>
+
 <html>	
 	<div>
 		<form action="signup.php" method="$_POST">
@@ -51,7 +51,7 @@ foreach($fieldnames as $fieldname){
 			<label for="Wachtwoord"><b>Wachtwoord</b><br></label>
 			<input type="password" placeholder="Vul in je wachtwoord" name="password" required><br><br>
 			<label for="Herhaal wachtwoord"><b>Herhaal wachtwoord</b><br></label>
-			<input type="password" placeholder="Herhaal je wachtwoord" name="password" required><br><br>   
+			<input type="password" placeholder="Herhaal je wachtwoord" name="repassword" required><br><br>   
 			<input type="submit">
 	</div>
 </html>
