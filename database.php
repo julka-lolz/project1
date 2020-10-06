@@ -37,17 +37,27 @@ class database{
 
 			echo "begin transatie";
 
+			//eerste query preparen en executen
 			$query = "INSERT INTO account (email, username, password) 
 				VALUES ('$email','$username', '$password')";
+
+			echo "sql statement: ".$query."<br>";
+			// prepare
+			$stmt = $this->db->prepare($query);
+			print_r($query);
+			// execute
+			$stmtExcecute = $stmt->execute(['email'=>email, 'username'=>username, 'password'=>password]);		
+			$this->db->commit();
+			//tweede query preparen en executen
 			$query2 = "INSERT INTO persoon (voornaam, tussenvoegsel, achternaam) 
 				VALUES ('$voornaam','$tussenvoegsel','$achternaam')";
 
-			echo "sql statement: ".$query."<br>".$query2;
-
-			$stmt = $this->db->prepare($query, $query2);
-			print_r($query, $query2);
-
-			$stmtExcecute = $stmt->execute(['voornaam'=>$voornaam,'tussenvoegsel'=>$tussenvoegsel, 'achternaam'=>$achternaam,  'email'=>email, 'username'=>username, 'password'=>password]);
+			echo "sql statement: ".$query2."<br>";
+			//prepare
+			$stmt = $this->db->prepare($query2);
+			print_r($query2);
+			//execute
+			$stmtExcecute = $stmt->execute(['voornaam'=>$voornaam,'tussenvoegsel'=>$tussenvoegsel, 'achternaam'=>$achternaam]);
 			$this->db->commit();
 		}
 		catch (Exception $a){

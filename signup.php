@@ -2,7 +2,7 @@
 
 include 'database.php';
 
-
+if(isset($_POST['submit'])){
 
 $fieldnames = array(
 	'voornaam', 'achternaam', 'email', 'username', 'password', 'repassword'
@@ -12,10 +12,11 @@ $fieldnames = array(
 $error = False;
 
 foreach($fieldnames as $fieldname){
+	echo $fieldname;
 	if (!isset($_POST[$fieldname]) || empty($_POST[$fieldname])){ 
 		$error = True;
 	}
-	echo "$error <br>";
+
 }
 
 if(!$error){
@@ -30,14 +31,16 @@ if(!$error){
 	$repassword = $_POST["repassword"];
 
 	// pass + repass check
+	echo 'in signup';
 
 	$db->addAccount($voornaam, $tussenvoegsel, $achternaam, $email, $username, $password);
 }
-?>
+}
 
+?>
 <html>	
 	<div>
-		<form action="signup.php" method="$_POST">
+		<form action="signup.php" method="post">
 			<label for="Voornaam"><b>Voornaam</b><br></label>
 			<input type="text" placeholder="Vul in je voornaam" name="voornaam" required><br><br>
 			<label for="Tussenvoegsel"><b>Tussenvoegsel</b><br></label>
@@ -52,6 +55,7 @@ if(!$error){
 			<input type="password" placeholder="Vul in je wachtwoord" name="password" required><br><br>
 			<label for="Herhaal wachtwoord"><b>Herhaal wachtwoord</b><br></label>
 			<input type="password" placeholder="Herhaal je wachtwoord" name="repassword" required><br><br>   
-			<input type="submit">
+			<input type="submit" name="submit">
 	</div>
 </html>
+
