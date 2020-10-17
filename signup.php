@@ -1,42 +1,42 @@
 ﻿<?php
 
-include 'database.php';
+	include 'database.php';
 
-if(isset($_POST['submit'])){
+	if(isset($_POST['submit'])){
 
-$fieldnames = array(
-	'voornaam', 'achternaam', 'email', 'username', 'password', 'repassword'
+		$fieldnames = array(
+			'voornaam', 'achternaam', 'email', 'username', 'password', 'repassword'
 	
-); 
+	); 
 
-$error = False;
+	$error = False;
 
-foreach($fieldnames as $fieldname){
-	echo $fieldname;
-	if (!isset($_POST[$fieldname]) || empty($_POST[$fieldname])){ 
-		$error = True;
+	foreach($fieldnames as $fieldname){
+		echo $fieldname;
+		if (!isset($_POST[$fieldname]) || empty($_POST[$fieldname])){ 
+			$error = True;
+		}
+
 	}
 
-}
+	if(!$error){
 
-if(!$error){
-	$db = new database('localhost', 'root', '', 'project1', 'utf8');
+		$db = new database('localhost', 'root', '', 'project1', 'utf8');
 
-	$voornaam = $_POST["voornaam"];
-	$tussenvoegsel = $_POST["tussenvoegsel"];
-	$achternaam = $_POST["achternaam"];
-	$email = $_POST["email"];
-	$username = $_POST["username"];
-	$password = $_POST["password"];
-	$repassword = $_POST["repassword"];
+		$voornaam = $_POST["voornaam"];
+		$tussenvoegsel = $_POST["tussenvoegsel"];
+		$achternaam = $_POST["achternaam"];
+		$email = $_POST["email"];
+		$username = $_POST["username"];
+		$password = $_POST["password"];
+		$repassword = $_POST["repassword"];
 
-	// pass + repass check
-	echo 'in signup';
+		// pass + repass check
+		echo 'is signup'."<br>";
 
-	$db->addAccount($voornaam, $tussenvoegsel, $achternaam, $email, $username, $password);
-}
-}
-
+		$db->addAccount($voornaam, $tussenvoegsel, $achternaam, $email, $username, $password);
+	}
+	}
 ?>
 <html>	
 	<div>
@@ -58,4 +58,3 @@ if(!$error){
 			<input type="submit" name="submit">
 	</div>
 </html>
-
